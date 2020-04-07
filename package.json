@@ -1,0 +1,25 @@
+{
+  "name": "Cars by location",
+  "version": "1.0.0",
+  "description": "A Future Cars database by location",
+  "main": "index.js",
+  "scripts": {
+    "test": ""
+  },
+  "repository": {
+    "type": "",
+    "url": ""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "",
+  "bugs": {
+    "url": ""
+  },
+  "homepage": "",
+  "dependencies": {
+    "body-parser": "",
+    "express": "",
+    "mongoose": ""
+  }
+}

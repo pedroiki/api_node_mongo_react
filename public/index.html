@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Rent a Car near  you!</title>
+        <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+        <link href="/styles.css" rel="stylesheet" />
+    </head>
+    <body>
+
+        <h1 class="title">Rent a Car near you</h1>
+        <div id="homepage">
+            <h1>Hire a car in your area!</h1>
+            <div id="cars"></div>
+        </div>
+
+        <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+        <script src="https://unpkg.com/react@15/dist/react.js"></script>
+        <script src="https://unpkg.com/react-dom@15/dist/react-dom.min.js"></script>
+
+        <!-- Create React Component -->
+        <script type="text/babel">
+        var Cars = React.createClass({
+            getInitialState: function(){
+                return({
+                    cars: []
+                });
+            },
+            render: function(){
+                var cars = this.state.cars;
+                cars = cars.map(function(car, index){
+                    return(
+                        <li key={index}>
+                            <span className={car.obj.available}></span>
+                            <span className="name">{car.obj.name}</span>
+                            <span className="rank">{car.obj.rank}</span>
+                            <span className="dist">{Math.floor(car.dis / 1000)} km</span>
+                        </li>
+                    );
+                });
+                return(
+                    <div id="car-container">
+                        <form id="search" onSubmit={this.handleSubmit}>
+                            <label>Enter your Latitude:</label>
+                            <input type="text" ref="lat" placeholder="latitude" required />
+                            <label>Enter your Longitude:</label>
+                            <input type="text" ref="lng" placeholder="longitude" required />
+                            <input type="submit" value="Find cars" />
+                        </form>
+                        <ul>{cars}</ul>
+                    </div>
+                );
+            },
+            handleSubmit: function(e){
+                e.preventDefault();
+                var lng = this.refs.lng.value;
+                var lat = this.refs.lat.value;
+
+                fetch('/api/cars?lng=' + lng + '&lat=' + lat).then(function(data){
+                    return data.json();
+                }).then( json => {
+                    this.setState({
+                        cars: json
+                    });
+                    console.log(json);
+                });
+            }
+        });
+        ReactDOM.render(<cars />, document.getElementById('cars'));
+        </script>
+
+
+    </body>
+</html>
