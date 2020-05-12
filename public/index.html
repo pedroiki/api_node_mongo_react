@@ -31,10 +31,12 @@
                 cars = cars.map(function(car, index){
                     return(
                         <li key={index}>
-                            <span className={car.obj.available}></span>
-                            <span className="name">{car.obj.name}</span>
-                            <span className="rank">{car.obj.rank}</span>
-                            <span className="dist">{Math.floor(car.dis / 1000)} km</span>
+                            <span className={car.available}></span>
+                            <span className="name">{car.name}</span>
+                            <span className="rank">{car.rank}</span>
+
+
+                            <span className="dist">{Math.floor(car.dist * 10000) } km</span>
                         </li>
                     );
                 });
@@ -66,7 +68,7 @@
                 });
             }
         });
-        ReactDOM.render(<cars />, document.getElementById('cars'));
+        ReactDOM.render(<Cars />, document.getElementById('cars'));
         </script>
 
 
