@@ -2,20 +2,33 @@ const express = require ('express');
 const router = express.Router();
 const Cars = require('../models/cars');
 
-// get a list of cars from the db
-router.get('/cars', function(req, res, next){
-    /* car.find({}).then(function(cars){
-        res.send(cars);
-    }); */
-    car.geoNear(
-        {type: 'Point', coordinates: [parseFloat(req.query.lng), parseFloat(req.query.lat)]},
-        {maxDistance: 100000, spherical: true}
-    ).then(function(cars){
-        res.send(cars);
-    }).catch(next);
-});
 
-// add a new car to the db
+// get a list of cars from the db
+router.get('/cars', function (req, res, next) {
+  Cars.aggregate().near({
+    near: [parseFloat(req.query.lng), parseFloat(req.query.lat)],
+    maxDistance: 0.10,         // 0.05 = 500km
+    type: "Point" ,
+    spherical: true,
+    distanceField: "dist"
+  })
+    .then(function (cars) {
+      res.send(cars);
+    })
+    .catch(next);
+})
+
+
+
+router.get("/all_cars", function(req, res, next){
+  Cars.find({ })
+  .then(function(cars){
+    res.send(cars)
+  })
+  .catch(next)
+})
+
+  // add a new car to the db
 router.post('/cars', function(req, res, next){
     Cars.create(req.body).then(function(car){
         res.send(car);
