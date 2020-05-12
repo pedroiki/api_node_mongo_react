@@ -1,6 +1,7 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
+const express = require('express');   // framework que cuida das requisicoes da API
+const bodyParser = require('body-parser');   //biblioteca dados cliente convertidos para jason
+const mongoose = require('mongoose');    //conexao com banco de dados mongo.db
+
 
 // set up express app
 const app = express();
@@ -25,6 +26,6 @@ app.use(function(err, req, res, next){
 });
 
 // listen for requests
-app.listen(process.env.port || 4000, function(){
+app.listen(  5000, function(){                       //aonde se troca as portas do servidor
     console.log('now listening for requests');
 });
